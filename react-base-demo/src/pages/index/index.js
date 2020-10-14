@@ -1,8 +1,14 @@
+/*
+ * @Author: yangying01
+ * @Date: 2020-10-13 10:39:53
+ * @LastEditors: yangying01
+ * @LastEditTime: 2020-10-14 10:53:49
+ */
 import React, { Component } from 'react';
 import classnames from 'classnames'
 import styled from 'styled-components'
-import './index.less'
-import style from './module.less'
+import './index.css'
+import style from './module.css'
 
 
 const MyDiv = styled.div`
