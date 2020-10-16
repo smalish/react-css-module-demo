@@ -2,7 +2,7 @@
  * @Author: yangying01
  * @Date: 2020-10-15 20:01:34
  * @LastEditors: yangying01
- * @LastEditTime: 2020-10-15 20:07:59
+ * @LastEditTime: 2020-10-16 11:43:55
  */
 import React, { Component } from 'react';
 import { Button, WhiteSpace } from 'antd-mobile';
@@ -16,7 +16,10 @@ class childView extends Component {
     return (
       <div>
         {/* <Button type="warning" onClick={eventFour(444)} >子组件-点击触发事件四</Button> */}
-        <Button type="warning" onClick={() => {eventFour(444)}} >子组件-点击触发事件四</Button>
+        <Button type="warning" onClick={() => {eventFour(444)}} >子组件-点击触发事件四</Button><WhiteSpace />
+
+        <Button type="warning" onClick={eventFour.bind(this, 444)} >子组件-点击触发事件四</Button>
+
 
       </div>
     );

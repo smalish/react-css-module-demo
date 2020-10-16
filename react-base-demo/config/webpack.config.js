@@ -160,6 +160,7 @@ module.exports = function(webpackEnv) {
         }
       );
     }
+
     return loaders;
   };
 
@@ -424,6 +425,21 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  //配置babel-plugin-react-css-modules这个插件.
+                  [
+                    'react-css-modules',
+                    {
+                      webpackHotModuleReloading: true,
+                      autoResolveMultipleImports: true, //Allow multiple anonymous imports if styleName is only in one of them.
+                      generateScopedName: '[name]_[local]_[hash:base64:5]',
+                      filetypes: {
+                        '.less': {
+                          syntax: 'postcss-less'
+                        }
+                      }
+                    }
+                  ],
+                  
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -481,6 +497,25 @@ module.exports = function(webpackEnv) {
               // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
             },
+            // Opt-in support for less
+            // By default we support less Modules with the
+            // extensions .module.less
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                'less-loader'
+              ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
+            },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css
             {
@@ -488,10 +523,31 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
-                modules: {
-                  getLocalIdent: getCSSModuleLocalIdent,
-                },
+                // modules: {
+                //   getLocalIdent: getCSSModuleLocalIdent,
+                // },
+                modules:{
+                  localIdentName:  '[name]_[local]_[hash:base64:5]'
+                }
               }),
+            },
+            // Adds support for CSS Modules, but using less
+            // using the extension .module.less
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  // modules: {
+                  //   getLocalIdent: getCSSModuleLocalIdent,
+                  // },
+                  modules:{
+                    localIdentName:  '[name]_[local]_[hash:base64:5]'
+                  }
+                },
+                'less-loader'
+              ),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
@@ -505,42 +561,6 @@ module.exports = function(webpackEnv) {
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'sass-loader'
-              ),
-              // Don't consider CSS imports dead code even if the
-              // containing package claims to have no side effects.
-              // Remove this when webpack adds a warning or an error for this.
-              // See https://github.com/webpack/webpack/issues/6571
-              sideEffects: true,
-            },
-            // Adds support for CSS Modules, but using less
-            // using the extension .module.less
-            {
-              test: lessModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 3,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: {
-                    getLocalIdent: getCSSModuleLocalIdent,
-                  },
-                
-                },
-                'less-loader'
-              ),
-            },
-            // Opt-in support for SASS (using .scss or .sass extensions).
-            // By default we support SASS Modules with the
-            // extensions .module.scss or .module.sass
-            {
-              test: lessRegex,
-              exclude: lessModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 3,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                  // modules: true,// 开启css-modules
-                },
-                'less-loader'
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.

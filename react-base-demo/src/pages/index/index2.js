@@ -2,14 +2,14 @@
  * @Author: yangying01
  * @Date: 2020-10-13 10:39:53
  * @LastEditors: yangying01
- * @LastEditTime: 2020-10-19 10:20:55
+ * @LastEditTime: 2020-10-19 10:45:20
  */
 import React, { Component } from 'react';
 import classnames from 'classnames'
 import styled from 'styled-components'
-import './index.less'
-import style from './a.module.less'
-
+import './index.module.less'
+//不能与全局样式混用
+import 'index.less'
 
 const MyDiv = styled.div`
   display: flex;
@@ -41,31 +41,13 @@ class index extends Component {
     }
     
     return (
-      <div className="page">
-        {/* 行内样式 */}
-        <div style={{'width': '300px', 'color': '#333', 'fontSize': '12px', 'backgroundColor': 'yellow'}}>
-          行内样式1
-        </div>
-        <div style={inlineStyle}>
-          行内样式2
-        </div>
+      <div styleName="page">
 
         {/* 模块化样式 */}
-        <div className={style.module + ' bold'} >
+        <div styleName="light bold aaa ddd" >
           模块化样式
-          <span className="red">red span</span>
+          {/* <span className="red">red span</span> */}
         </div>
-        <span className="red">red span</span>
-
-        {/* 动态切换样式 */}
-        <div className={classnames({'error': this.state.isError})}>
-          动态切换样式
-        </div>
-
-        {/* css in js */}
-        <MyDiv className={classnames({'error': this.state.isError})}>
-          css in js
-        </MyDiv>
 
       </div>
     );
@@ -73,3 +55,4 @@ class index extends Component {
 }
 
 export default index;
+

@@ -2,7 +2,7 @@
  * @Author: yangying01
  * @Date: 2020-10-15 20:15:21
  * @LastEditors: yangying01
- * @LastEditTime: 2020-10-16 10:49:42
+ * @LastEditTime: 2020-10-16 11:42:07
  */
 import React, { Component } from 'react';
 import throttle from 'lodash.throttle';
@@ -30,9 +30,9 @@ class lodashView extends Component {
   render() {
     return (
       <>
-        <Button type="ghost" onClick={this.handleClickThrottled}>Load More</Button>
+        <Button type="ghost" onClick={this.handleClickThrottled}>Load More</Button><WhiteSpace />
 
-        <InputItem
+        <input
         type="text"
         onChange={this.handleChange}
         placeholder="Search..."
