@@ -2,7 +2,7 @@
  * @Author: yangying01
  * @Date: 2020-10-13 11:19:22
  * @LastEditors: yangying01
- * @LastEditTime: 2020-10-13 13:11:44
+ * @LastEditTime: 2020-10-15 17:33:43
  */
 import React from 'react'
 import { HashRouter as Router, Route, Switch,Redirect } from 'react-router-dom'
